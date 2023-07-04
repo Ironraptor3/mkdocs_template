@@ -1,3 +1,5 @@
 site/
-local_docs/
 custom.yml
+
+local_docs.zip
+local_docs/

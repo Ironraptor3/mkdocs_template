@@ -1,5 +1,4 @@
 INHERIT: mkdocs.yml
-site_dir: local_docs
 # Make building work locally, without any setup
 
 # Must be mkdocs, readthedocs, or a theme with local file support
