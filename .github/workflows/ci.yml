@@ -1,0 +1,33 @@
+# Github workflows main file
+
+# Default name
+name: ci 
+on:
+  push:
+    branches:
+      # Only on push to public will the gh-pages change
+      - public
+permissions:
+  contents: write
+jobs:
+  deploy:
+    # Specify what type of vm to run in
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout this repo
+      - uses: actions/checkout@v3
+      # Attempt to install the latest python
+      - uses: actions/setup-python@v4
+        with:
+          # Specifically: Python 3
+          python-version: 3.x
+      # Attempt to restore the cache of the Python installation
+      - uses: actions/cache@v3
+        with:
+          path: ${{ env.pythonLocation }}
+          # Key of cache = "repo_name-python_location"
+          key: ${{ github.repository }}-${{ env.pythonLocation }}
+      # Install mkdocs, upgrading if a newer version exists
+      - run: pip install --upgrade --upgrade-strategy eager mkdocs
+      # Run gh-deploy
+      - run: mkdocs gh-deploy --force
