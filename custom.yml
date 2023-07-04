@@ -1,0 +1,2 @@
+INHERIT: mkdocs.yml
+# Insert custom data here: e.g. theme

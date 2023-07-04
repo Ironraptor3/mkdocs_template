@@ -1,0 +1,5 @@
+site_name: Test Journey Wiki
+theme:
+  name: readthedocs
+  prev_next_buttons_location: none
+  navigation_depth: 6
