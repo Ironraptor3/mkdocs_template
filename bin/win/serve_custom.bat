@@ -1,5 +1,5 @@
-@echo off
+@ECHO OFF
 REM This may not be the safest way to perform this
-pushd %~dp0\\..\\..\\
+PUSHD %~dp0\\..\\..\\
 mkdocs serve --config-file custom.yml %*
-popd
+POPD

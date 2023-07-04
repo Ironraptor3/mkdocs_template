@@ -1,11 +1,10 @@
-@echo off
+@ECHO OFF
 REM This may not be the safest way to perform this
-pushd %~dp0\\..\\..\\
+PUSHD %~DP0\\..\\..\\
 SETLOCAL
 REM Use a var for consistency, still need to update .gitignore if this is changed
-set docs_out=local_docs
-mkdocs build --config-file local.yml --site-dir %docs_out% %*
-tar.exe -a -cf %docs_out%.zip %docs_out%
+set DOCS_OUT=local_docs
+mkdocs build --config-file local.yml --site-dir %DOCS_OUT% %*
+tar.exe -a -cf %DOCS_OUT%.zip %DOCS_OUT%
 ENDLOCAL
-popd
-
+POPD
