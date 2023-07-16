@@ -5,6 +5,9 @@ to generate locally hosted Wiki websites in real time.
 
 Mkdocs is much more flexible than Nuclino, and does not have hosting fees to work
 alongside a team.
+
+LIMITATION: This will not pull / download https images into the markdown.
+This may make it harder for some offline exports to view certain images.
 '''
 # TODO Comments
 # TODO Pytest - Test Brainstorming
@@ -24,6 +27,8 @@ IMG_REGEX = re.compile(r'\!\[(.*?)\]\((.*?)\)') # Image ref
 IMG_GROUP = 2
 LINK_REGEX = re.compile(r'(\!?)\[(.*?)\]\((.*?)\)') # Any ref
 # No LINK_GROUP
+BADIMG_REGEX = re.compile(r'h *ttps://lh\d+\.googleusercontent.com/')
+# No BADIMG_GROUP
 
 #pylint: disable=too-many-instance-attributes
 class NuclinoTree():
@@ -104,28 +109,38 @@ class NuclinoTree():
             old_link = link_match.group(3)
             if link_match.group(1): # Image
                 # New link
-                replace = self.img_dict.get(old_link, None)
-                if replace is None:
-                    self.issues.append(f'Unknown image ({path}): {old_link}')
+                img_val = self.img_dict.get(old_link, None)
+                replace_link = old_link
+                if img_val is None:
+                    if BADIMG_REGEX.match(old_link): 
+                        self.issues.append(f'Potentially bad Nuclino image ({path}): {old_link}')
+                    elif not (old_link.startswith('https://') or old_link.startswith('http://')):
+                        self.issues.append(f'Unknown image (no weblink): ({path}): {old_link}')
+                        replace_link = 'TODO'
                 else:
                     sep = '/' # Markdown uses Linux path separators always
-                    relative_path = replace[1].get_relative_path(file_data[1],
+                    relative_path = img_val[1].get_relative_path(file_data[1],
                                                                  start='..',
                                                                  sep=sep,
                                                                  rev=True)
                     if not relative_path:
-                        self.issues.append(f'There was an issue getting the relative path for {replace[0]}')
+                        self.issues.append(f'There was an issue getting the relative path for {img_val[0]}')
+                        replace_link = 'TODO' 
                     else:
-                        replace = f'{relative_path}{os.path.basename(old_link)}'
+                        # Replace with a centered image
+                        replace_link = sep.join([relative_path, os.path.basename(old_link)])
+                    #pylint:disable = line-too-long
+                    replace = f'''\n<div style="text-align:center"><img alt="{link_match.group(2)}" src="{replace_link}"/></div>\n'''
+                    #pylint:enable = line-too-long
             # Nuclino link - BAD
             elif old_link.lstrip().startswith('https://app.nuclino.com/'):
-                replace = 'TODO'
+                replace = f'[{link_match.group(2)}](TODO)'
                 self.issues.append(f'TODO fix Nuclino link ({path}): {old_link}')
 
             if replace is not None:
                 self.log.info('Replacing %s with %s', old_link, replace)
-                repl_start = link_match.start(3) + offset
-                repl_end = link_match.end(3) + offset
+                repl_start = link_match.start(0) + offset
+                repl_end = link_match.end(0) + offset
                 result = ''.join([result[:repl_start],
                                   replace,
                                   result[repl_end:]])
@@ -216,9 +231,9 @@ class NuclinoTreeNode():
         if path_dup is None:
             return name
         ctr = path_dup.get(name, 0)
+        path_dup[name] = ctr + 1
         if ctr:
             name = f'{name}_{ctr}'
-        path_dup[name] = ctr + 1
         return name
 
     def is_leaf(self):
@@ -237,12 +252,12 @@ class NuclinoTreeNode():
         ***ENDN***
         '''
         if self == other_node:
-            return f'{start}{sep}' if not next_start else start
+            return start
         elif self.is_leaf():
             return None
         else:
             for child_node in self.children:
-                next_path = sep.join([start, next_start])
+                next_path = sep.join([start, next_start]) if next_start else start
                 result = child_node.get_relative_path(other_node,
                                                       start=next_path,
                                                       next_start = '..' if rev else self.name,
