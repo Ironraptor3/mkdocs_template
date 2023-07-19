@@ -121,14 +121,14 @@ If your repo is private and you don't have an expensive GitHub subscription, thi
 
 ## Showing the Live Wiki
 
-To show the live wiki, which updates in real time as you save edits to pages, do the following:
+To show the live wiki, which updates in real time as you save edits to pages, do the following (`This means type into Command Prompt`):
 
-- Open up your Command Prompt and **navigate to the wiki folder**. This may be hard to do for new Command Line users. Think of it as the text equivalent for navigating folders in your computer. Type the following in Command Prompt:
+- Open up your Command Prompt and **navigate to the wiki folder**. This may be hard to do for new Command Line users. Think of it as the text equivalent for navigating folders in your computer.:
 
   - See a list of folders  + files where you currently are `dir`
   
   - Go to folder X `cd X` (cd means change dir)
- 
+
     - You probably need to type `cd Documents\GitHub\your_repo_name`
 
   - Go back one `cd ..`
