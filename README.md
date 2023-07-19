@@ -28,11 +28,13 @@ There are going to be two ways to use Python from here: the easy way and the *ri
 
 ### The Easy Way
 
-Simply type and press enter: `pip install mkdocs`
+In Command Prompt, simply type and press enter: `pip install mkdocs`
 
 ### The Right Way
 
 Do this if you already were using Python for something else; or plan on using Python for something else in the future. This process will create a Virtual Environment for Python, which is separate from other projects you are doing / will do in Python. If you don't think this is relevant / don't care, see **The Easy Way**.
+
+(Do all of this in Command Prompt)
 
 - In the location of your choice, create a venv for Python: `python -m venv .venv`
 
@@ -109,6 +111,8 @@ To get new changes, go to Github Desktop. In the top bar, press "Fetch Origin". 
 Currently, the branch you push and pull from is master (looking at the top bar of Github Desktop should confirm this). However, if you push to the **public** branch, then any changes you make will be visible to the publicly facing website that Github automatically generates (through some nice mkdocs functionality and Github Actions).
 
 Typically, you would want to checkout files or entirely merge master into public, then commit and push.
+
+If your repo is private and you don't have an expensive GitHub subscription, this will unfortunately not work.
 
 ## (Pre)Viewing the Wiki
 
