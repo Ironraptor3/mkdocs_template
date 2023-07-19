@@ -22,6 +22,8 @@ To enable collaboration, you need to be able to interact with Git. If you are al
 
 Python is used as the means of showing the wiki locally; getting custom themes; and running various utility scripts within the wiki. Get it here: [Python](https://www.python.org/downloads/).
 
+While installing, be sure to check the box to **"Add Python to Environment Variables"**. If you do not check this box, you may re-open the Python installer > Click Modify > Add Python to Environment Variables.
+
 Open up your **command prompt** after installing Python (application called cmd). The pip module this library uses to show the wiki is called *mkdocs*.
 
 There are going to be two ways to use Python from here: the easy way and the *right but not necessary* way. If you are a beginner, just stick with
@@ -66,7 +68,7 @@ If you are more of a Vim / emacs person, of course those work too.
 
 ## An Entirely New Wiki
 
-From the wiki page on Github, there should be a green button which reads **Use this template** > Create a new repository. Be sure to **Include all Branches** and select whether or not your repository will be **public** or **private**.
+From this page on Github (assuming you are logged in), there should be a green button which reads **Use this template** -> Create a new repository. Be sure to **Include all Branches** and select whether or not your repository will be **public** or **private**. This will effectively copy paste the repository.
 
 ## From Nuclino (!Advanced!)
 
@@ -78,9 +80,10 @@ If you are using **Github Desktop**.
 
 - Open Github Desktop. If this is the first time doing so, it'll ask you to sign in; etc.
 
-- Click **<> Code** > Local > Open with GitHub Desktop.
+- Within the wiki repository, click the green button at the top **<> Code** > Local > Open with GitHub Desktop.
   
   - Choose the appropriate path to put the files (Default should be fine)
+  - Press clone
 
 # Interacting with the Wiki
 
@@ -120,21 +123,25 @@ If your repo is private and you don't have an expensive GitHub subscription, thi
 
 To show the live wiki, which updates in real time as you save edits to pages, do the following:
 
-- Open up your Command Prompt and **navigate to the wiki folder**. This may be hard to do for new Command Line users. Think of it as the text equivalent for navigating folders in your computer.
-  
+- Open up your Command Prompt and **navigate to the wiki folder**. This may be hard to do for new Command Line users. Think of it as the text equivalent for navigating folders in your computer. Type the following in Command Prompt:
+
   - See a list of folders  + files where you currently are `dir`
   
   - Go to folder X `cd X` (cd means change dir)
-  
+ 
+    - You probably need to type `cd Documents\GitHub\your_repo_name`
+
   - Go back one `cd ..`
 
 - Prepare your Python (Those who followed The Easy Way do not need to do anything)
 
-- `mkdocs serve`
+- Type `mkdocs serve`
   
   - If following changing your flavor, below:  `bin\win\serve_custom.bat`
 
-- To close later, press ctrl+C in the Window
+- View in browser by going to the following address `localhost:8000` (Type this in the top of your browser)
+
+- To close later, press ctrl+C in Command Prompt
   
   - If asked to terminate batch job, `N`
 
@@ -154,13 +161,15 @@ As in **Showing the Live Wiki**, navigate to the wiki folder and prepare your Py
 
 An advantage of having a local copy is that you can choose however you like to view it.
 
-To get a new theme, e.g. mkdocs-material (Browse around for others, if you want). Here is a great [video about mkdcos-material](https://youtu.be/Q-YA_dA8C20)
-
+To get a new theme, e.g. mkdocs-material (Browse around for others, if you want). Here is a great [video about mkdcos-material](https://youtu.be/Q-YA_dA8C20). In your trusty command prompt:
 - Prepare your Python
 
 - `pip install mkdocs-material`
 
-- Edit the `custom.yml` file:
+
+Then:
+
+- Edit the `custom.yml` file in your wiki:
   
   - ```yml
     theme:
